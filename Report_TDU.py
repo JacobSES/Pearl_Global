@@ -20,7 +20,7 @@ class TDU:
     def read_from_sql(self):
         user = 'Pearl_Global'
         password = 'Pearl737!!'
-        URL = f'mssql+pyodbc://{user}:{password}@localhost:1433/{self.database}?driver=SQL+Server'
+        URL = f'mssql+pyodbc://{user}:{password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
         engine = sal.create_engine(URL) 
         
         for tableName in self.table_array:

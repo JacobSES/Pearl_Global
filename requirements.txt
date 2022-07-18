@@ -1,6 +1,6 @@
 pandas
 PyMongo
-pyodbc
+pyodbc==4.0.32
 streamlit
 apscheduler
 plotly
