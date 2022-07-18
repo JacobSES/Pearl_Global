@@ -1,5 +1,6 @@
 pandas
 PyMongo
+pyodbc
 streamlit
 apscheduler
 plotly
