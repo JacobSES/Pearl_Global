@@ -15,80 +15,81 @@ class DASHBOARD:
 
     def __init__(self, TDU_LIST):
         ##page configuration
-        self.today = (str)(datetime.date.today())
-        self.yesterday = (str)(datetime.date.today() - datetime.timedelta(days = 1))
-        self.start_day = (str)(datetime.date.today() - datetime.timedelta(days = 7))
-        self.last_week_start = (str)(datetime.date.today() - datetime.timedelta(days = 14))
-        self.unit_list = ["TDU02", "TDU03", "TDU04"]
-        self.time_range = ["Day to Day", "Month to Month", "Year to Year"]
-        self.performance_target = {"Availability": 0, "Throughput": 0, "Tonnes Processed": 0}
-        self.weekly_performance_df = {}
-        st.set_page_config(page_title = "ENTYRE Plant Master Production", 
-                            page_icon = ":bar_chart:", 
-                            initial_sidebar_state="collapsed",
-                            layout="wide")
-        ##this is header
-        t1,t2 = st.columns((0.2, 1))
-        t1.image("images/Pearl_Logo.png", width = 250)
-        t2.title("Operational Performace Dashboard")
-        t2.markdown(" **tel:** (08)6252 8135 **| website:** https://pearlglobal.com.au **| email:** info@pearlglobal.com.au")
-        
-        #Select data
-        self.tdu_select = st.selectbox("Choose TDU Unit:", self.unit_list, help = "Filter Report to show only one TDU unit")
-        date_sidebar = st.sidebar.selectbox("Select Time Range", self.time_range, help= "Filter Time Range") #### NEED TO WORK ON THIS
-
-        # ##Set the tdu performance target
-        with st.sidebar.form(key = "Target_Form"):
+        with st.echo(code_location='below'):
+            self.today = (str)(datetime.date.today())
+            self.yesterday = (str)(datetime.date.today() - datetime.timedelta(days = 1))
+            self.start_day = (str)(datetime.date.today() - datetime.timedelta(days = 7))
+            self.last_week_start = (str)(datetime.date.today() - datetime.timedelta(days = 14))
+            self.unit_list = ["TDU02", "TDU03", "TDU04"]
+            self.time_range = ["Day to Day", "Month to Month", "Year to Year"]
+            self.performance_target = {"Availability": 0, "Throughput": 0, "Tonnes Processed": 0}
+            self.weekly_performance_df = {}
+            st.set_page_config(page_title = "ENTYRE Plant Master Production", 
+                                page_icon = ":bar_chart:", 
+                                initial_sidebar_state="collapsed",
+                                layout="wide")
+            ##this is header
+            t1,t2 = st.columns((0.2, 1))
+            t1.image("images/Pearl_Logo.png", width = 250)
+            t2.title("Operational Performace Dashboard")
+            t2.markdown(" **tel:** (08)6252 8135 **| website:** https://pearlglobal.com.au **| email:** info@pearlglobal.com.au")
             
-            target_availability = st.number_input("Target Availability (%)", step=1, value=0)
-            target_throughput = st.number_input("Target Throughput (t/hr)", step=1, value=0)
-            target_tonnes_procssed = st.number_input("Target Tonnes Procssed (t)", step=1, value=0)
-            target_submit = st.form_submit_button(label = "Submit")
-            if target_submit == True:
-                self.performance_target["Availability"] = target_availability
-                self.performance_target["Throughput"] = target_throughput
-                self.performance_target["Tonnes Processed"] = target_tonnes_procssed
-                        
-        tdu_index = self.get_tdu_index(self.tdu_select)
+            #Select data
+            self.tdu_select = st.selectbox("Choose TDU Unit:", self.unit_list, help = "Filter Report to show only one TDU unit")
+            date_sidebar = st.sidebar.selectbox("Select Time Range", self.time_range, help= "Filter Time Range") #### NEED TO WORK ON THIS
 
-        ##today performance
-        m1,m2,m3,m4,m5 = st.columns((1,1,1,1,1))
-        self.weekly_performance_df = self.read_weekly_performance_df(self.start_day, self.today)
-        self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
-        
-        Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
-        Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
+            # ##Set the tdu performance target
+            with st.sidebar.form(key = "Target_Form"):
+                
+                target_availability = st.number_input("Target Availability (%)", step=1, value=0)
+                target_throughput = st.number_input("Target Throughput (t/hr)", step=1, value=0)
+                target_tonnes_procssed = st.number_input("Target Tonnes Procssed (t)", step=1, value=0)
+                target_submit = st.form_submit_button(label = "Submit")
+                if target_submit == True:
+                    self.performance_target["Availability"] = target_availability
+                    self.performance_target["Throughput"] = target_throughput
+                    self.performance_target["Tonnes Processed"] = target_tonnes_procssed
+                            
+            tdu_index = self.get_tdu_index(self.tdu_select)
 
-        m1.write("")
-        m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
-                 delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
-        m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
-                 delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
-        m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
-                 delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
-        m5.write("")
+            ##today performance
+            m1,m2,m3,m4,m5 = st.columns((1,1,1,1,1))
+            self.weekly_performance_df = self.read_weekly_performance_df(self.start_day, self.today)
+            self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
+            
+            Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
+            Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
-        g1,g2 = st.columns((1,1))
-        fig1 = self.plotly_availability_graph(self.weekly_performance_df[tdu_index].loc[:,["Availability"]])
-        fig2 = self.plotly_availability_chart()
-        g1.plotly_chart(fig1, use_container_width=True)
-        g2.plotly_chart(fig2, use_container_width=True)
+            m1.write("")
+            m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
+                    delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
+            m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
+                    delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
+            m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
+                    delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
+            m5.write("")
 
-        h1,h2 = st.columns((1,1))
-        fig3 = self.plotly_tonnes_processed_chart(self.weekly_performance_df)
-        fig4 = self.plotly_tonnes_processed_pie(self.weekly_performance_df, self.lastWeek_performance_df)
-        h1.plotly_chart(fig3, use_container_width=True)
-        h2.plotly_chart(fig4, use_container_width=True)
+            g1,g2 = st.columns((1,1))
+            fig1 = self.plotly_availability_graph(self.weekly_performance_df[tdu_index].loc[:,["Availability"]])
+            fig2 = self.plotly_availability_chart()
+            g1.plotly_chart(fig1, use_container_width=True)
+            g2.plotly_chart(fig2, use_container_width=True)
 
-        k1,k2 = st.columns((1,1))
-        fig5 = self.plotly_throughput_graph(self.weekly_performance_df[tdu_index].loc[:,["Throughput"]])
-        fig6 = self.plotly_throughput_by_TDU_graph(self.weekly_performance_df, self.lastWeek_performance_df)
-        k1.plotly_chart(fig5, use_container_width=True)
-        k2.plotly_chart(fig6, use_container_width=True)
+            h1,h2 = st.columns((1,1))
+            fig3 = self.plotly_tonnes_processed_chart(self.weekly_performance_df)
+            fig4 = self.plotly_tonnes_processed_pie(self.weekly_performance_df, self.lastWeek_performance_df)
+            h1.plotly_chart(fig3, use_container_width=True)
+            h2.plotly_chart(fig4, use_container_width=True)
 
-        # t1 = st.columns(1,0)
-        fig7 = self.plotly_availability_tonnes_procssed_graph(self.weekly_performance_df)
-        st.plotly_chart(fig7, use_container_width = True)
+            k1,k2 = st.columns((1,1))
+            fig5 = self.plotly_throughput_graph(self.weekly_performance_df[tdu_index].loc[:,["Throughput"]])
+            fig6 = self.plotly_throughput_by_TDU_graph(self.weekly_performance_df, self.lastWeek_performance_df)
+            k1.plotly_chart(fig5, use_container_width=True)
+            k2.plotly_chart(fig6, use_container_width=True)
+
+            # t1 = st.columns(1,0)
+            fig7 = self.plotly_availability_tonnes_procssed_graph(self.weekly_performance_df)
+            st.plotly_chart(fig7, use_container_width = True)
 
     def get_tdu_index(self, tdu_select):
 
