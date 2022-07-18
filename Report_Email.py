@@ -1,5 +1,5 @@
-import time
 import smtplib
+import email
 from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email import encoders
