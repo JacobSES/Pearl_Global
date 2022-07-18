@@ -3,5 +3,4 @@ streamlit
 apscheduler
 plotly
 sqlalchemy
-email
 smtplib
