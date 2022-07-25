@@ -116,6 +116,7 @@ class DASHBOARD:
             index+=1
         return weekly_performance_df
 
+    @st.cache(allow_output_mutation=True)
     def read_from_sql(self, database, query):
         user = 'Pearl_Global'
         password = 'Pearl737!!'
