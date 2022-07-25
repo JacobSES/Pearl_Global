@@ -13,7 +13,7 @@ class DASHBOARD:
 
     def __init__(self, TDU_LIST):
         ##page configuration
-        with st.echo(code_location='below'):
+        # with st.echo(code_location='below'):
             self.today = (str)(datetime.date.today())
             self.yesterday = (str)(datetime.date.today() - datetime.timedelta(days = 1))
             self.start_day = (str)(datetime.date.today() - datetime.timedelta(days = 7))
@@ -116,7 +116,7 @@ class DASHBOARD:
             index+=1
         return weekly_performance_df
 
-    # @st.cache(allow_output_mutation=True)
+    @st.cache(allow_output_mutation=True)
     def read_from_sql(self, database, query):
         user = 'Pearl_Global'
         password = 'Pearl737!!'

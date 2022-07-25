@@ -27,6 +27,5 @@ def main():
     tdu4_task(TDU_LIST[3])
     dash = DASHBOARD(TDU_LIST)
     
-    
 if __name__=="__main__":
     main()
