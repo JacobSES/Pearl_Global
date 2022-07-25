@@ -27,15 +27,15 @@ class TDU:
 
         return pyodbc.connect(
             "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
-            + st.secrets[self.server]
+            + st.secrets["server"]
             + ";DATABASE="
-            + st.secrets[self.database]
+            + st.secrets["database"]
             + ";UID="
-            + st.secrets[self.user]
+            + st.secrets["username"]
             + ";PWD="
-            + st.secrets[self.password]
+            + st.secrets["password"]
         )
-    
+        
     def run_query(self, query):
         with self.conn.cursor() as cur:
             cur.execute(query)
