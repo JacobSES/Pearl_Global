@@ -1,4 +1,5 @@
 import datetime
+from re import S
 from unicodedata import decimal
 import numpy as np
 import pandas as pd
@@ -107,6 +108,7 @@ class DASHBOARD:
         elif tdu_select == 2:
             return "TDU04"
 
+    @st.cache
     def read_weekly_performance_df(self, start_day, end_day):
         weekly_performance_df = {}
         weekly_performance_query = f"SELECT * FROM dbo.PERFORMANCE_REPORT WHERE DATE BETWEEN '{start_day}' AND '{end_day}'" ##SET THE START DATE
@@ -121,7 +123,7 @@ class DASHBOARD:
         user = 'Pearl_Global'
         password = 'Pearl737!!'
         URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=ODBC+Driver+17+for+SQL+Server'
-        engine = sal.create_engine(URL) 
+        engine = sal.create_engine(URL, fast_executemany = True) 
         sql_query = pd.read_sql_query(query, engine.connect())
         df = pd.DataFrame(sql_query)        
         df.set_index("DATE", inplace= True)
