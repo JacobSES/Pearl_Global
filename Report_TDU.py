@@ -35,7 +35,8 @@ class TDU:
 
     @st.cache(allow_output_mutation=True)
     def read_from_sql(self):
-        URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        # URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        URL = f'mssql+pyodbc://{self.user}:{self.password}@SES_UNIT_01\SQLEXPRESS/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
         engine = sal.create_engine(URL) 
         print(URL)
         print(";;;;;;;;;;;;;;;;;;;;;;;;;;;")
