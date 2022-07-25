@@ -25,9 +25,10 @@ class TDU:
 
     def init_connection(self):
         # engine = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=" + st.secrets["server"] + ";DATABASE=" + st.secrets["database"] + ";UID=" + st.secrets["username"] + ";PWD=" + st.secrets["password"]
-        engine = "DRIVER={ODBC Driver 17 for SQL Server}; SERVER=localhost:1433;DATABASE=TDU02;UID=Pearl_Global;PWD=Pearl737!!"
+        engine = "DRIVER={SQL SERVER};SERVER=" + st.secrets["server"] + ";DATABASE=" + st.secrets["database"] + ";UID=" + st.secrets["username"] + ";PWD=" + st.secrets["password"]
+
         print(engine)
-        return pyodbc.connect(engine)
+        return pyodbc.connect(engine, autocommit=True)
         
     def run_query(self, query):
         with self.conn.cursor() as cur:
