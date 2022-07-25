@@ -37,7 +37,8 @@ class TDU:
     def read_from_sql(self):
         URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
         engine = sal.create_engine(URL) 
-        
+        print(URL)
+        print(";;;;;;;;;;;;;;;;;;;;;;;;;;;")
         for tableName in self.table_array:
             if tableName == self.table_array[0]: #read production report from SQL
                 # query = f"SELECT * FROM {database}.dbo.{tableName} WHERE Timestamp BETWEEN '{yesterday} 06:00:00' AND '{reporting_date} 06:00:00'"
