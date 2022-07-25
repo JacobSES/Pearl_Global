@@ -11,7 +11,7 @@ from Report_Email import EMAIL
 from Report_Dashboard import DASHBOARD
 
 def tdu4_task(TDU4):
-    TDU4.read_from_sql()
+    TDU4.read_tdu_data()
     TDU4.calculate_production()
     TDU4.calculate_tdu_availability()
     TDU4.calculate_tdu_throughput()

@@ -21,40 +21,29 @@ class TDU:
         self.tdu_availability = 0
         self.tdu_tonnes_processed = 0
         self.tdu_throughput = 0
-    #     self.conn = self.init_connection()
 
-    # def init_connection(self):
-    #     engine = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+ st.secrets["server"] +';DATABASE='+ self.database +';UID='+ st.secrets["username"] +';PWD='+ st.secrets["password"]
-    #     print(engine)
-    #     return pyodbc.connect(engine)
-        
-    # def run_query(self, query):
-    #     with self.conn.cursor() as cur:
-    #         cur.execute(query)
-    #         return cur.fetchall()
-
-    @st.cache(allow_output_mutation=True)
-    def read_from_sql(self):
-        # URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
-        URL = f'mssql+pyodbc://{self.user}:{self.password}@SES_UNIT_01\SQLEXPRESS/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
-        engine = sal.create_engine(URL) 
-        print(URL)
-        print(";;;;;;;;;;;;;;;;;;;;;;;;;;;")
+    def read_tdu_data(self): 
         for tableName in self.table_array:
             if tableName == self.table_array[0]: #read production report from SQL
                 # query = f"SELECT * FROM {database}.dbo.{tableName} WHERE Timestamp BETWEEN '{yesterday} 06:00:00' AND '{reporting_date} 06:00:00'"
                 query = f"SELECT * FROM {self.database}.dbo.{tableName}" ##This is just for testing query
-                sql_query = pd.read_sql_query(query, engine.connect())
-                self.dataframe[self.table_array[0]] = pd.DataFrame(sql_query)
+                self.dataframe[self.table_array[0]] = self.read_from_sql(query)
 
             elif tableName == self.table_array[1]: #read downtime report from SQL
                 # query = f"SELECT * FROM {database}.dbo.{tableName} WHERE Start_Time BETWEEN '{yesterday} 06:00:00' AND '{reporting_date} 06:00:00'"
                 query = f"SELECT * FROM {self.database}.dbo.{tableName}" ##This is just for testing query
-                sql_query = pd.read_sql_query(query, engine.connect())
-                self.dataframe[self.table_array[1]] = pd.DataFrame(sql_query)
+                self.dataframe[self.table_array[1]] = self.read_from_sql(query)
                 self.dataframe[self.table_array[1]]["Downtime_Duration"] = self.dataframe[self.table_array[1]]["End_Time"] - self.dataframe[self.table_array[1]]["Start_Time"]
-    
-    @st.cache(allow_output_mutation=True)
+
+    # @st.cache(allow_output_mutation=True)
+    def read_from_sql(self, query):
+
+        URL = f'mssql+pyodbc://{self.user}:{self.password}@SES_UNIT_01\SQLEXPRESS/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        engine = sal.create_engine(URL)
+        sql_query = pd.read_sql_query(query, engine.connect())
+        return pd.DataFrame(sql_query)
+
+    # @st.cache(allow_output_mutation=True)
     def write_to_sql(self, insert_row, table_name):
         user = 'Pearl_Global'
         password = 'Pearl737!!'
