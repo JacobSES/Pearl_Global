@@ -21,43 +21,41 @@ class TDU:
         self.tdu_availability = 0
         self.tdu_tonnes_processed = 0
         self.tdu_throughput = 0
-        self.conn = self.init_connection()
+    #     self.conn = self.init_connection()
 
-    def init_connection(self):
+    # def init_connection(self):
 
-        return pyodbc.connect(
-            "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
-            + st.secrets[self.server]
-            + ";DATABASE="
-            + st.secrets[self.database]
-            + ";UID="
-            + st.secrets[self.user]
-            + ";PWD="
-            + st.secrets[self.password]
-        )
+    #     return pyodbc.connect(
+    #         "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
+    #         + st.secrets[self.server]
+    #         + ";DATABASE="
+    #         + st.secrets[self.database]
+    #         + ";UID="
+    #         + st.secrets[self.user]
+    #         + ";PWD="
+    #         + st.secrets[self.password]
+    #     )
     
-    def run_query(self, query):
-        with self.conn.cursor() as cur:
-            cur.execute(query)
-            return cur.fetchall()
+    # def run_query(self, query):
+    #     with self.conn.cursor() as cur:
+    #         cur.execute(query)
+    #         return cur.fetchall()
 
     def read_from_sql(self):
-        # URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
-        # engine = sal.create_engine(URL) 
+        URL = f'mssql+pyodbc://{self.user}:{self.password}@localhost:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        engine = sal.create_engine(URL) 
         
         for tableName in self.table_array:
             if tableName == self.table_array[0]: #read production report from SQL
                 # query = f"SELECT * FROM {database}.dbo.{tableName} WHERE Timestamp BETWEEN '{yesterday} 06:00:00' AND '{reporting_date} 06:00:00'"
                 query = f"SELECT * FROM {self.database}.dbo.{tableName}" ##This is just for testing query
-                # sql_query = pd.read_sql_query(query, engine.connect())
-                sql_query = self.run_query(query)
+                sql_query = pd.read_sql_query(query, engine.connect())
                 self.dataframe[self.table_array[0]] = pd.DataFrame(sql_query)
 
             elif tableName == self.table_array[1]: #read downtime report from SQL
                 # query = f"SELECT * FROM {database}.dbo.{tableName} WHERE Start_Time BETWEEN '{yesterday} 06:00:00' AND '{reporting_date} 06:00:00'"
                 query = f"SELECT * FROM {self.database}.dbo.{tableName}" ##This is just for testing query
-                # sql_query = pd.read_sql_query(query, engine.connect())
-                sql_query = self.run_query(query)
+                sql_query = pd.read_sql_query(query, engine.connect())
                 self.dataframe[self.table_array[1]] = pd.DataFrame(sql_query)
                 self.dataframe[self.table_array[1]]["Downtime_Duration"] = self.dataframe[self.table_array[1]]["End_Time"] - self.dataframe[self.table_array[1]]["Start_Time"]
 
