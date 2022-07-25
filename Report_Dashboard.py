@@ -120,7 +120,7 @@ class DASHBOARD:
     def read_from_sql(self, database, query):
         user = 'Pearl_Global'
         password = 'Pearl737!!'
-        URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=SQL+Server'
+        URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=ODBC+Driver+17+for+SQL+Server'
         engine = sal.create_engine(URL) 
         sql_query = pd.read_sql_query(query, engine.connect())
         df = pd.DataFrame(sql_query)        
