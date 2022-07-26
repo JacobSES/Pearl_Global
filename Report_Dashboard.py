@@ -9,6 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from Report_TDU import TDU
+import pyodbc
 
 class DASHBOARD:
 
@@ -120,12 +121,23 @@ class DASHBOARD:
 
     # @st.cache(allow_output_mutation=True)
     def read_from_sql(self, database, query):
+        server = "192.168.250.49"
         user = 'Pearl_Global'
         password = 'Pearl737!!'
-        # URL = f'mssql+pyodbc://{user}:{password}@192.168.250.49:1433/{database}?driver=ODBC+Driver+17+for+SQL+Server'
-        # URL = f'mssql+pyodbc://{user}:{password}@localhost:1433/{database}?driver=ODBC+Driver+17+for+SQL+Server'
+        URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=ODBC+Driver+17+for+SQL+Server'
+        
+        engine = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+ server +';DATABASE='+ database +';UID='+ user +';PWD='+ password
+        conn = pyodbc.connect(engine)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        row = cursor.fetchone()
+        while row: 
+            # print(row)
+            row = cursor.fetchone()
+        df = pd.DataFrame(row)
 
-        URL = f"mssql+pyodbc://{user}:{password}@192.168.250.49/master"
+        print(row)     
+
         engine = sal.create_engine(URL, fast_executemany = True) 
         sql_query = pd.read_sql_query(query, engine.connect())
         df = pd.DataFrame(sql_query)        
