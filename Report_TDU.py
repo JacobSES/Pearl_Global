@@ -38,8 +38,8 @@ class TDU:
     # @st.cache(allow_output_mutation=True)
     def read_from_sql(self, query):
 
-        # URL = f'mssql+pyodbc://{self.user}:{self.password}@SES_UNIT_01\SQLEXPRESS/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
-        URL = f'mssql+pyodbc://{self.user}:{self.password}@192.168.250.49:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        URL = f'mssql+pyodbc://{self.user}:{self.password}@SES_UNIT_01\SQLEXPRESS/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
+        # URL = f'mssql+pyodbc://{self.user}:{self.password}@192.168.250.49:1433/{self.database}?driver=ODBC+Driver+17+for+SQL+Server'
         engine = sal.create_engine(URL)
         sql_query = pd.read_sql_query(query, engine.connect())
         return pd.DataFrame(sql_query)
