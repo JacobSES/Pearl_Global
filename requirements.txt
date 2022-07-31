@@ -5,3 +5,4 @@ streamlit
 apscheduler
 plotly
 sqlalchemy
+pymssql
