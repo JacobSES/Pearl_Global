@@ -109,7 +109,6 @@ class DASHBOARD:
         elif tdu_select == 2:
             return "TDU04"
 
-    # @st.cache(allow_output_mutation=True)
     def read_weekly_performance_df(self, start_day, end_day):
         weekly_performance_df = {}
         weekly_performance_query = f"SELECT * FROM dbo.PERFORMANCE_REPORT WHERE DATE BETWEEN '{start_day}' AND '{end_day}'" ##SET THE START DATE
@@ -119,7 +118,6 @@ class DASHBOARD:
             index+=1
         return weekly_performance_df
 
-    # @st.cache(allow_output_mutation=True)
     def read_from_sql(self, database, query):
         server = "192.168.250.49"
         user = 'Pearl_Global'
