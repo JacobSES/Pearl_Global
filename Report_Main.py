@@ -24,7 +24,7 @@ def main():
         databaseName = f'TDU0{i+1}'
         TDU_LIST.append(TDU(i+1, databaseName))
 
-    # tdu4_task(TDU_LIST[3])
+    tdu4_task(TDU_LIST[3])
     dash = DASHBOARD(TDU_LIST)
     
 if __name__=="__main__":

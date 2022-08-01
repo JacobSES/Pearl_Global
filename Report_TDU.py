@@ -83,11 +83,6 @@ class TDU:
         self.dataframe[self.table_array[0]]['Throughput_kg'] *= -1
         self.daily_total = self.dataframe[self.table_array[0]]['Throughput_kg'].sum()
         self.tdu_tonnes_processed = self.daily_total/1000
-        # half_number = (int)((len(self.dataframe[self.table_array[0]]) - 1)/2)
-        # self.day_df = self.dataframe[self.table_array[0]].iloc[:(half_number-1),:]
-        # self.night_df = self.dataframe[self.table_array[0]].iloc[half_number:,:]
-        # self.day_total = self.day_df['Throughput_kg'].sum()
-        # self.night_total = self.night_df['Throughput_kg'].sum()
 
     def calculate_tdu_availability(self):
         downtime_total = 0

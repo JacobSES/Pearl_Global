@@ -56,40 +56,42 @@ class DASHBOARD:
             m1,m2,m3,m4,m5 = st.columns((1,1,1,1,1))
             self.weekly_performance_df = self.read_weekly_performance_df(self.start_day, self.today)
             self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
-            
-            Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
-            Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
+            pd.to_datetime(self.weekly_performance_df[tdu_index]["DATE"])
+            print(self.weekly_performance_df[tdu_index].dtypes)
+            print(self.weekly_performance_df[tdu_index].loc[self.today])
+            # Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
+            # Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
-            m1.write("")
-            m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
-                    delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
-            m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
-                    delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
-            m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
-                    delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
-            m5.write("")
+            # m1.write("")
+            # m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
+            #         delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
+            # m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
+            #         delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
+            # m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
+            #         delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
+            # m5.write("")
 
-            g1,g2 = st.columns((1,1))
-            fig1 = self.plotly_availability_graph(self.weekly_performance_df[tdu_index].loc[:,["Availability"]])
-            fig2 = self.plotly_availability_chart()
-            g1.plotly_chart(fig1, use_container_width=True)
-            g2.plotly_chart(fig2, use_container_width=True)
+            # g1,g2 = st.columns((1,1))
+            # fig1 = self.plotly_availability_graph(self.weekly_performance_df[tdu_index].loc[:,["Availability"]])
+            # fig2 = self.plotly_availability_chart()
+            # g1.plotly_chart(fig1, use_container_width=True)
+            # g2.plotly_chart(fig2, use_container_width=True)
 
-            h1,h2 = st.columns((1,1))
-            fig3 = self.plotly_tonnes_processed_chart(self.weekly_performance_df)
-            fig4 = self.plotly_tonnes_processed_pie(self.weekly_performance_df, self.lastWeek_performance_df)
-            h1.plotly_chart(fig3, use_container_width=True)
-            h2.plotly_chart(fig4, use_container_width=True)
+            # h1,h2 = st.columns((1,1))
+            # fig3 = self.plotly_tonnes_processed_chart(self.weekly_performance_df)
+            # fig4 = self.plotly_tonnes_processed_pie(self.weekly_performance_df, self.lastWeek_performance_df)
+            # h1.plotly_chart(fig3, use_container_width=True)
+            # h2.plotly_chart(fig4, use_container_width=True)
 
-            k1,k2 = st.columns((1,1))
-            fig5 = self.plotly_throughput_graph(self.weekly_performance_df[tdu_index].loc[:,["Throughput"]])
-            fig6 = self.plotly_throughput_by_TDU_graph(self.weekly_performance_df, self.lastWeek_performance_df)
-            k1.plotly_chart(fig5, use_container_width=True)
-            k2.plotly_chart(fig6, use_container_width=True)
+            # k1,k2 = st.columns((1,1))
+            # fig5 = self.plotly_throughput_graph(self.weekly_performance_df[tdu_index].loc[:,["Throughput"]])
+            # fig6 = self.plotly_throughput_by_TDU_graph(self.weekly_performance_df, self.lastWeek_performance_df)
+            # k1.plotly_chart(fig5, use_container_width=True)
+            # k2.plotly_chart(fig6, use_container_width=True)
 
-            # t1 = st.columns(1,0)
-            fig7 = self.plotly_availability_tonnes_procssed_graph(self.weekly_performance_df)
-            st.plotly_chart(fig7, use_container_width = True)
+            # # t1 = st.columns(1,0)
+            # fig7 = self.plotly_availability_tonnes_procssed_graph(self.weekly_performance_df)
+            # st.plotly_chart(fig7, use_container_width = True)
 
     def get_tdu_index(self, tdu_select):
 
@@ -123,23 +125,11 @@ class DASHBOARD:
         user = 'Pearl_Global'
         password = 'Pearl737!!'
         URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=ODBC+Driver+17+for+SQL+Server'
-        
-        engine = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+ server +';DATABASE='+ database +';UID='+ user +';PWD='+ password
-        conn = pyodbc.connect(engine)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        row = cursor.fetchone()
-        while row: 
-            # print(row)
-            row = cursor.fetchone()
-        df = pd.DataFrame(row)
-
-        print(row)     
-
         engine = sal.create_engine(URL, fast_executemany = True) 
         sql_query = pd.read_sql_query(query, engine.connect())
         df = pd.DataFrame(sql_query)        
-        df.set_index("DATE", inplace= True)
+        pd.to_datetime(df["DATE"])
+        # df.set_index("DATE", inplace= True)
         return df
     
     def plotly_availability_graph(self, performance_df):
