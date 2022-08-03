@@ -227,8 +227,8 @@ class DASHBOARD:
 
         for i in performance_df:
             for index,row in performance_df[i].iterrows():
-                availability_list[self.get_tdu_name(i)].append(row["Availability"])
-                tonnes_processed_list[self.get_tdu_name(i)].append(row["Tonnes_Processed"])
+                availability_list[self.get_tdu_name(i)].append(row["AVAILABILITY"])
+                tonnes_processed_list[self.get_tdu_name(i)].append(row["TONNES_PROCESSED"])
 
         index_list = list(performance_df[0].index.values)
         
