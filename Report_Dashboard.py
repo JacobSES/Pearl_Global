@@ -58,7 +58,7 @@ class DASHBOARD:
             m1,m2,m3,m4,m5 = st.columns((1,1,1,1,1))
             self.weekly_performance_df = self.read_weekly_performance_df(self.start_day, self.today)
             self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
-            st.write(self.weekly_performance_df[tdu_index].loc["2022-08-03"])
+            st.write(self.weekly_performance_df[tdu_index].loc[datetime.date.today()])
 
 
             # Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
