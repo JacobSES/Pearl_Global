@@ -138,7 +138,7 @@ class DASHBOARD:
     def run_query(self, query, conn):
         cursor = conn.cursor().execute(query)
         for c in cursor.description:
-            return c.fetchall()
+            return c
         # with conn.cursor() as cur:
         #     cur.execute(query)
         #     return cur.fetchall()
