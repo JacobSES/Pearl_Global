@@ -128,11 +128,11 @@ class DASHBOARD:
         # df.set_index("DATE", inplace= True)
         return df
 
-    @st.experimental_singleton
+    # @st.experimental_singleton
     def init_connection(self):
         return snowflake.connector.connect(**st.secrets["snowflake"])
 
-    @st.experimental_memo(ttl=600)
+    # @st.experimental_memo(ttl=600)
     def run_query(self, query, conn):
         with conn.cursor() as cur:
             cur.execute(query)
