@@ -11,6 +11,7 @@ from plotly.subplots import make_subplots
 from Report_TDU import TDU
 import pyodbc
 import snowflake.connector
+from snowflake.connector import DictCursor
 
 class DASHBOARD:
 
@@ -127,7 +128,7 @@ class DASHBOARD:
         conn = self.init_connection()
         sql_query = self.run_query(query, conn)
         
-        df = pd.DataFrame(sql_query, columns= self.cur.description)        
+        df = pd.DataFrame(sql_query)        
         # df.set_index(df[0], inplace= True)
         return df
 
@@ -138,7 +139,7 @@ class DASHBOARD:
     # @st.experimental_memo(ttl=600)
     def run_query(self, query, conn):
 
-        with conn.cursor() as self.cur:
+        with conn.cursor(DictCursor) as self.cur:
             self.cur.execute(query)
             return self.cur.fetchall()
 
