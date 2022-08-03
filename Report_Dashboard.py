@@ -59,7 +59,7 @@ class DASHBOARD:
             self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
             st.write(self.weekly_performance_df[tdu_index].head())
 
-            
+
             # Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
             # Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
@@ -127,8 +127,7 @@ class DASHBOARD:
         conn = self.init_connection()
         sql_query = self.run_query(query, conn)
         df = pd.DataFrame(sql_query)        
-        # pd.to_datetime(df["DATE"])
-        df.set_index(df[0], inplace= True)
+        # df.set_index(df[0], inplace= True)
         return df
 
     # @st.experimental_singleton
