@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from Report_TDU import TDU
 import pyodbc
+import snowflake.connector
 
 class DASHBOARD:
 
@@ -121,17 +122,24 @@ class DASHBOARD:
         return weekly_performance_df
 
     def read_from_sql(self, database, query):
-        server = "192.168.250.49"
-        user = 'Pearl_Global'
-        password = 'Pearl737!!'
-        URL = f'mssql+pyodbc://{user}:{password}@SES_UNIT_01\SQLEXPRESS/{database}?driver=ODBC+Driver+17+for+SQL+Server'
-        engine = sal.create_engine(URL, fast_executemany = True) 
-        sql_query = pd.read_sql_query(query, engine.connect())
+        
+        conn = self.init_connection()
+        sql_query = self.run_query(query, conn)
         df = pd.DataFrame(sql_query)        
         pd.to_datetime(df["DATE"])
         # df.set_index("DATE", inplace= True)
         return df
-    
+
+    @st.experimental_singleton
+    def init_connection(self):
+        return snowflake.connector.connect(**st.secrets["snowflake"])
+        
+    @st.experimental_memo(ttl=600)
+    def run_query(self, query, conn):
+        with conn.cursor() as cur:
+            cur.execute(query)
+        return cur.fetchall()
+
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
         fig_df["Target"] = self.performance_target["Availability"]
