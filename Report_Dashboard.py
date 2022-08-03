@@ -147,7 +147,7 @@ class DASHBOARD:
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
         fig_df["Target"] = self.performance_target["AVAILABILITY"]
-        fig = px.line(fig_df, x=fig_df.index, y=[fig_df["Availability"], fig_df["Target"]])
+        fig = px.line(fig_df, x=fig_df.index, y=[fig_df["AVAILABILITY"], fig_df["Target"]])
         fig.update_traces(marker_color = '#264653')
         fig.update_yaxes(range=[0, 100])
         fig.update_layout(title_text = f"{self.tdu_select} Availability Trend" ,title_x=0, yaxis_title = "Availability", xaxis_title = "Date")
