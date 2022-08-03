@@ -113,7 +113,7 @@ class DASHBOARD:
     def read_weekly_performance_df(self, start_day, end_day):
         weekly_performance_df = {}
         
-        weekly_performance_query = f"SELECT * FROM TDU02.PUBLIC.PERFORMANCE_REPORT WHERE DATE BETWEEN '{start_day}' AND '{end_day}';" ##SET THE START DATE
+        weekly_performance_query = f"SELECT * FROM TDU02.PUBLIC.PERFORMANCE_TABLE WHERE DATE BETWEEN '{start_day}' AND '{end_day}';" ##SET THE START DATE
         index = 0
         for i in self.unit_list:
             weekly_performance_df[index] = self.read_from_sql(i, weekly_performance_query)    
