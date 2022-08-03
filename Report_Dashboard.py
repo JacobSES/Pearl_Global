@@ -130,7 +130,7 @@ class DASHBOARD:
         
         df = pd.DataFrame(sql_query)        
         df.set_index("DATE", inplace= True)
-        df['DATE'] = df['DATE'].astype("string")
+        
         return df
 
     # @st.experimental_singleton
