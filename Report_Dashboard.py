@@ -61,8 +61,8 @@ class DASHBOARD:
             st.write(self.weekly_performance_df[tdu_index].loc[datetime.date.today()])
 
 
-            # Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
-            # Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
+            Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
+            Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
             # m1.write("")
             # m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
