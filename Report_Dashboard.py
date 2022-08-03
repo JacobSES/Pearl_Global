@@ -18,10 +18,10 @@ class DASHBOARD:
     def __init__(self, TDU_LIST):
         ##page configuration
         # with st.echo(code_location='below'):
-            self.today = (str)(datetime.date.today())
-            self.yesterday = (str)(datetime.date.today() - datetime.timedelta(days = 1))
-            self.start_day = (str)(datetime.date.today() - datetime.timedelta(days = 7))
-            self.last_week_start = (str)(datetime.date.today() - datetime.timedelta(days = 14))
+            self.today = (datetime.date.today())
+            self.yesterday = (datetime.date.today() - datetime.timedelta(days = 1))
+            self.start_day = (datetime.date.today() - datetime.timedelta(days = 7))
+            self.last_week_start = (datetime.date.today() - datetime.timedelta(days = 14))
             self.unit_list = ["TDU02", "TDU03", "TDU04"]
             self.time_range = ["Day to Day", "Month to Month", "Year to Year"]
             self.performance_target = {"Availability": 0, "Throughput": 0, "Tonnes Processed": 0}
