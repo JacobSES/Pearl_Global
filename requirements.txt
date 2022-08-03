@@ -6,3 +6,4 @@ apscheduler
 plotly
 sqlalchemy
 pymssql
+snowflake-connector-python
