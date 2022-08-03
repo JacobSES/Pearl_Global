@@ -61,7 +61,7 @@ class DASHBOARD:
             st.write(self.weekly_performance_df[tdu_index].head())
 
 
-            Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
+            # Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
             # Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
             # m1.write("")
