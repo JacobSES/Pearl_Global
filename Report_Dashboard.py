@@ -58,20 +58,20 @@ class DASHBOARD:
             m1,m2,m3,m4,m5 = st.columns((1,1,1,1,1))
             self.weekly_performance_df = self.read_weekly_performance_df(self.start_day, self.today)
             self.lastWeek_performance_df = self.read_weekly_performance_df(self.last_week_start, self.start_day)
-            # st.write(self.weekly_performance_df[tdu_index].head())
+            st.write(self.weekly_performance_df[tdu_index].head())
 
 
             Today_data = self.weekly_performance_df[tdu_index].loc[self.today]
-            Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
+            # Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
-            m1.write("")
-            m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
-                    delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
-            m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
-                    delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
-            m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
-                    delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
-            m5.write("")
+            # m1.write("")
+            # m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
+            #         delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
+            # m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
+            #         delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
+            # m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
+            #         delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
+            # m5.write("")
 
             # g1,g2 = st.columns((1,1))
             # fig1 = self.plotly_availability_graph(self.weekly_performance_df[tdu_index].loc[:,["Availability"]])
@@ -130,7 +130,7 @@ class DASHBOARD:
         
         df = pd.DataFrame(sql_query)        
         df.set_index("DATE", inplace= True)
-        
+        df['DATE'] = df['DATE'].astype("string")
         return df
 
     # @st.experimental_singleton
