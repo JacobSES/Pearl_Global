@@ -127,7 +127,7 @@ class DASHBOARD:
         conn = self.init_connection()
         sql_query = self.run_query(query, conn)
         
-        df = pd.DataFrame(sql_query, columns= self.cur.description[0])        
+        df = pd.DataFrame(sql_query, columns= self.cur.description)        
         # df.set_index(df[0], inplace= True)
         return df
 
