@@ -133,7 +133,7 @@ class DASHBOARD:
     def init_connection(self):
         return snowflake.connector.connect(**st.secrets["snowflake"])
 
-    @st.experimental_memo(ttl=600)
+    # @st.experimental_memo(ttl=600)
     def run_query(self, query, conn):
         with conn.cursor() as cur:
             cur.execute(query)
