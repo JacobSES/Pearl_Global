@@ -18,7 +18,7 @@ class DASHBOARD:
     def __init__(self, TDU_LIST):
         ##page configuration
         # with st.echo(code_location='below'):
-            self.today = (datetime.date.today())
+            self.today = (str)(datetime.date.today())
             self.yesterday = (str)(datetime.date.today() - datetime.timedelta(days = 1))
             self.start_day = (str)(datetime.date.today() - datetime.timedelta(days = 7))
             self.last_week_start = (str)(datetime.date.today() - datetime.timedelta(days = 14))
@@ -129,7 +129,8 @@ class DASHBOARD:
         sql_query = self.run_query(query, conn)
         
         df = pd.DataFrame(sql_query)        
-        # df.set_index(df[0], inplace= True)
+        df.set_index("DATE", inplace= True)
+        
         return df
 
     # @st.experimental_singleton
