@@ -192,7 +192,7 @@ class DASHBOARD:
         ##current week vs last week.
         fig_df = performance_df
         fig_df["Target"] = self.performance_target["Throughput"]
-        fig = px.line(fig_df, x=fig_df.index, y=[fig_df["Throughput"], fig_df["Target"]])
+        fig = px.line(fig_df, x=fig_df.index, y=[fig_df["THROUGHPUT"], fig_df["Target"]])
         fig.update_traces(marker_color = '#264653')
         fig.update_layout(title_text = f"{self.tdu_select} Throughput (kg/hr)" ,title_x=0, yaxis_title = "Throughput (kg/hr)", xaxis_title = "Date")
         return fig
