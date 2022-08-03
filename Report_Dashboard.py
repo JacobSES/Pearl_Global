@@ -136,9 +136,12 @@ class DASHBOARD:
 
     # @st.experimental_memo(ttl=600)
     def run_query(self, query, conn):
-        with conn.cursor() as cur:
-            cur.execute(query)
-            return cur.fetchall()
+        cursor = conn.cursor().execute(query)
+        for c in cursor.description:
+            return c.fetchall()
+        # with conn.cursor() as cur:
+        #     cur.execute(query)
+        #     return cur.fetchall()
 
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
