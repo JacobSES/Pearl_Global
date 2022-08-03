@@ -146,7 +146,7 @@ class DASHBOARD:
 
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
-        fig_df["Target"] = self.performance_target["Availability"]
+        fig_df["Target"] = self.performance_target["AVAILABILITY"]
         fig = px.line(fig_df, x=fig_df.index, y=[fig_df["Availability"], fig_df["Target"]])
         fig.update_traces(marker_color = '#264653')
         fig.update_yaxes(range=[0, 100])
@@ -165,7 +165,7 @@ class DASHBOARD:
         return fig
 
     def plotly_tonnes_processed_chart(self, df_list):
-        fig_df = pd.concat([df_list[0]["Tonnes_Processed"], df_list[1]["Tonnes_Processed"], df_list[2]["Tonnes_Processed"]], axis=1, keys = self.unit_list)
+        fig_df = pd.concat([df_list[0]["TONNES_PROCESSED"], df_list[1]["TONNES_PROCESSED"], df_list[2]["TONNES_PROCESSED"]], axis=1, keys = self.unit_list)
         fig_df["Target"] = self.performance_target["Tonnes Processed"]
         fig = px.line(fig_df, x=fig_df.index, y=[fig_df[self.unit_list[0]], fig_df[self.unit_list[1]], fig_df[self.unit_list[2]], fig_df['Target']])
         fig.update_traces(marker_color = '#264653')
@@ -178,8 +178,8 @@ class DASHBOARD:
         tonnes_processed_weekly_last = {"TDU02": 0, "TDU03": 0 , "TDU04": 0}
         index = 0
         for i in df_list:
-            tonnes_processed_weekly[self.unit_list[index]] = round(df_list[i]["Tonnes_Processed"].mean(), 2)
-            tonnes_processed_weekly_last[self.unit_list[index]] = round(df_list_lastWeek[i]["Tonnes_Processed"].mean(), 2)
+            tonnes_processed_weekly[self.unit_list[index]] = round(df_list[i]["TONNES_PROCESSED"].mean(), 2)
+            tonnes_processed_weekly_last[self.unit_list[index]] = round(df_list_lastWeek[i]["TONNES_PROCESSED"].mean(), 2)
             index+=1
 
         fig = make_subplots(1, 2, specs=[[{'type':'domain'}, {'type':'domain'}]], subplot_titles=['Last Week', 'Current Week'])
@@ -191,7 +191,7 @@ class DASHBOARD:
     def plotly_throughput_graph(self, performance_df):
         ##current week vs last week.
         fig_df = performance_df
-        fig_df["Target"] = self.performance_target["Throughput"]
+        fig_df["Target"] = self.performance_target["THROUGHPUT"]
         fig = px.line(fig_df, x=fig_df.index, y=[fig_df["Throughput"], fig_df["Target"]])
         fig.update_traces(marker_color = '#264653')
         fig.update_layout(title_text = f"{self.tdu_select} Throughput (kg/hr)" ,title_x=0, yaxis_title = "Throughput (kg/hr)", xaxis_title = "Date")
@@ -204,8 +204,8 @@ class DASHBOARD:
         lastWeekly_total_average = 0
         for i in performance_df:
             # average = performance_df[i].loc[:,["Throughput"]].mean()
-            average = performance_df[i]["Throughput"].mean()
-            average_lastWeek = performance_df_lastWeek[i]["Throughput"].mean()
+            average = performance_df[i]["THROUGHPUT"].mean()
+            average_lastWeek = performance_df_lastWeek[i]["THROUGHPUT"].mean()
             throughput_weekly_average[self.get_tdu_name(i)] = average.round(decimals = 1)
             throughput_weekly_average_lastWeek[self.get_tdu_name(i)] = average_lastWeek.round(decimals = 1)
             weekly_total_average += average
