@@ -125,8 +125,8 @@ class DASHBOARD:
         conn = self.init_connection()
         sql_query = self.run_query(query, conn)
         df = pd.DataFrame(sql_query)        
-        pd.to_datetime(df["DATE"])
-        # df.set_index("DATE", inplace= True)
+        # pd.to_datetime(df["DATE"])
+        df.set_index("DATE", inplace= True)
         return df
 
     # @st.experimental_singleton
