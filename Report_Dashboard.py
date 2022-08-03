@@ -141,7 +141,7 @@ class DASHBOARD:
         #     return c
         with conn.cursor() as cur:
             cur.execute(query)
-            print(cur.description)
+            st.write(cur.description)
             return cur.fetchall()
 
     def plotly_availability_graph(self, performance_df):
