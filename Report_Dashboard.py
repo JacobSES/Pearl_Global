@@ -146,7 +146,7 @@ class DASHBOARD:
 
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
-        fig_df["Target"] = self.performance_target["AVAILABILITY"]
+        fig_df["Target"] = self.performance_target["Availability"]
         fig = px.line(fig_df, x=fig_df.index, y=[fig_df["AVAILABILITY"], fig_df["Target"]])
         fig.update_traces(marker_color = '#264653')
         fig.update_yaxes(range=[0, 100])
