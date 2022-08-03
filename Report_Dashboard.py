@@ -65,12 +65,12 @@ class DASHBOARD:
             Yesterday_data = self.weekly_performance_df[tdu_index].loc[self.yesterday]
 
             m1.write("")
-            m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["Availability"], 2)) + "%", 
-                    delta = str(round(Today_data["Availability"] - Yesterday_data["Availability"], 2)) + "% Compared to yesterday")
-            m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["Throughput"], 2)) + " t/hr", 
-                    delta = str(round(Today_data["Throughput"] - Yesterday_data["Throughput"], 2)) + "kg/hr Compared to yesterday")
-            m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["Tonnes_Processed"], 2)) + "tonnes", 
-                    delta = str(round(Today_data["Tonnes_Processed"] - Yesterday_data["Tonnes_Processed"], 2)) + "kg/hr Compared to yesterday")
+            m2.metric(label = self.tdu_select + " Availability", value = str(round(Today_data["AVAILABILITY"], 2)) + "%", 
+                    delta = str(round(Today_data["AVAILABILITY"] - Yesterday_data["AVAILABILITY"], 2)) + "% Compared to yesterday")
+            m3.metric(label = self.tdu_select + " Throughput", value = str(round(Today_data["THROUGHPUT"], 2)) + " t/hr", 
+                    delta = str(round(Today_data["THROUGHPUT"] - Yesterday_data["THROUGHPUT"], 2)) + "kg/hr Compared to yesterday")
+            m4.metric(label = self.tdu_select + " Tonnes Procssed", value = str(round(Today_data["TONNES_PROCESSED"], 2)) + "tonnes", 
+                    delta = str(round(Today_data["TONNES_PROCESSED"] - Yesterday_data["TONNES_PROCESSED"], 2)) + "kg/hr Compared to yesterday")
             m5.write("")
 
             # g1,g2 = st.columns((1,1))
