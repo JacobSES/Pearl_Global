@@ -126,7 +126,8 @@ class DASHBOARD:
         
         conn = self.init_connection()
         sql_query = self.run_query(query, conn)
-        df = pd.DataFrame(sql_query)        
+        
+        df = pd.DataFrame(sql_query, columns= self.cur.description)        
         # df.set_index(df[0], inplace= True)
         return df
 
@@ -136,13 +137,10 @@ class DASHBOARD:
 
     # @st.experimental_memo(ttl=600)
     def run_query(self, query, conn):
-        # cursor = conn.cursor().execute(query)
-        # for c in cursor.description:
-        #     return c
-        with conn.cursor() as cur:
-            cur.execute(query)
-            st.write(cur.description)
-            return cur.fetchall()
+
+        with conn.cursor() as self.cur:
+            self.cur.execute(query)
+            return self.cur.fetchall()
 
     def plotly_availability_graph(self, performance_df):
         fig_df = performance_df
